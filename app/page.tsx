@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, Mail, X, Plus } from "lucide-react";
+import { Menu, Mail, X, Plus, Download } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -97,13 +97,27 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex items-center">
+        {/* Action Buttons */}
+        <div className="flex items-center gap-2 md:gap-3">
+          {/* Download CV Button */}
+          <a
+            href="/Resume.pdf"
+            download
+            className="flex items-center justify-center gap-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 w-10 h-10 md:w-auto md:h-auto md:px-5 md:py-2.5 rounded-full transition-colors shadow-sm"
+            title="Download CV"
+          >
+            <Download size={16} className="shrink-0" />
+            <span className="hidden md:block">Download CV</span>
+          </a>
+
+          {/* Get in Touch Button */}
           <a
             href="mailto:sultan.fatahhh@gmail.com"
-            className="hidden md:flex items-center gap-2 text-sm font-medium text-white bg-gray-900 hover:bg-black px-5 py-2.5 rounded-full transition-colors shadow-sm"
+            className="flex items-center justify-center gap-2 text-sm font-medium text-white bg-gray-900 hover:bg-black w-10 h-10 md:w-auto md:h-auto md:px-5 md:py-2.5 rounded-full transition-colors shadow-sm"
+            title="Get in Touch"
           >
-            <Mail size={16} />
-            Hubungi Saya
+            <Mail size={16} className="shrink-0" />
+            <span className="hidden md:block">Get in Touch</span>
           </a>
         </div>
       </nav>
@@ -155,7 +169,7 @@ export default function Home() {
                   <rect width="20" height="16" x="2" y="4" rx="2"></rect>
                   <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                 </svg>
-                Email
+                Let's Talk
               </a>
             </li>
             <li>
