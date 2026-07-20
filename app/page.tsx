@@ -4,6 +4,7 @@ import { useState } from "react";
 import ThemeTransitionStyles from "@/components/ThemeTransitionStyles";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
+import ScrollingTags from "@/components/ScrollingTags"; // <-- Tambahkan import ini
 import TypewriterTitle from "@/components/TypewriterTitle";
 import AuthorProfile from "@/components/AuthorProfile";
 import ArticleContent from "@/components/ArticleContent";
@@ -28,17 +29,7 @@ export default function Home() {
           }`}
         >
           <main className="max-w-3xl mx-auto px-5 md:px-8 pt-8 md:pt-12 pb-24 w-full">
-            {/* Tags Start */}
-            <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-gray-500 dark:text-gray-400 mb-6 font-sans">
-              <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full transition-colors">
-                Artificial Intelligence
-              </span>
-              <span className="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-full transition-colors">
-                Data Science
-              </span>
-            </div>
-            {/* Tags End */}
-
+            <ScrollingTags />
             <TypewriterTitle />
             <AuthorProfile />
             <ArticleContent />
