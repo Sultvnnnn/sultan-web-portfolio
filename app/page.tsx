@@ -1,10 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, Mail, X } from "lucide-react";
+import { Menu, Mail, X, Plus } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // State Photo Profile
+  const [imageError, setImageError] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   // State Typewriter Effect
   const [displayText, setDisplayText] = useState("");
@@ -15,7 +25,7 @@ export default function Home() {
   const phrases = [
     'Sultan says "Hi, welcome to my little corner of the internet."',
     "He builds things with code, not magic tricks. Vibe code counts too.",
-    "Sultan's a data enthusiast.",
+    "I'm a data enthusiast.",
     "Also, a Software Engineer.",
   ];
 
@@ -32,7 +42,7 @@ export default function Home() {
     } else {
       timeout = setTimeout(() => {
         setDisplayText(fullText.substring(0, displayText.length + 1));
-        setTypingSpeed(80); // Speed Ketik
+        setTypingSpeed(50); // Speed Ketik
       }, typingSpeed);
     }
 
@@ -231,25 +241,90 @@ export default function Home() {
 
           {/* Author Info Start */}
           <div className="flex items-center gap-4 mt-8 md:mt-10 mb-4 border-b border-gray-100 pb-6 md:pb-8 font-sans">
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-base md:text-lg shadow-sm">
-              SAF
+            {/* Photo Profile Start */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger
+                  className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden bg-blue-600 flex items-center justify-center shrink-0 shadow-sm cursor-pointer hover:ring-2 hover:ring-blue-400 hover:scale-105 transition-all duration-200 border-none focus:outline-none"
+                  onClick={() => !imageError && setIsZoomed(true)}
+                >
+                  {!imageError ? (
+                    <img
+                      src="/Photo_Profile.webp"
+                      alt="Sultan Abdul Fatah"
+                      className="w-full h-full object-cover"
+                      onError={() => setImageError(true)}
+                    />
+                  ) : (
+                    <span className="text-white font-bold text-base md:text-lg">
+                      SAF
+                    </span>
+                  )}
+                </TooltipTrigger>
+
+                <TooltipContent side="bottom" className="text-xs font-medium">
+                  <p>Click for details</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            {/* Overlay Foto Fullscreen (Efek Zoom) - Kode ini tetap sama seperti sebelumnya */}
+            <div
+              className={`fixed inset-0 z-100 flex items-center justify-center bg-black/80 backdrop-blur-sm transition-opacity duration-300 ${
+                isZoomed
+                  ? "opacity-100 pointer-events-auto"
+                  : "opacity-0 pointer-events-none"
+              }`}
+              onClick={() => setIsZoomed(false)}
+              aria-label="Close image preview"
+            >
+              {/* Animasi membesar (scale) */}
+              <div
+                className={`relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white shadow-2xl transition-transform duration-300 ease-out ${
+                  isZoomed ? "scale-100" : "scale-50"
+                }`}
+              >
+                <img
+                  src="/Photo_Profile.webp"
+                  alt="Sultan Abdul Fatah Enlarged"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <button
+                className="absolute top-6 right-6 md:top-10 md:right-10 p-3 bg-white/10 hover:bg-white/30 text-white rounded-full transition-colors"
+                onClick={() => setIsZoomed(false)}
+                aria-label="Close"
+              >
+                <X size={28} />
+              </button>
             </div>
+            {/* Photo Profile End */}
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-medium text-gray-900 text-sm md:text-base">
+                <span className="font-lora font-bold text-gray-900 text-sm md:text-base">
                   Sultan Abdul Fatah
                 </span>
                 <a
                   href="https://linkedin.com/in/sultan-fatahhh"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 text-xs md:text-sm font-medium hover:text-blue-700 transition-colors"
+                  className="group relative flex items-center justify-center w-6 h-6 rounded-full bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-all duration-300"
+                  aria-label="Connect"
                 >
-                  Connect
+                  <Plus size={14} strokeWidth={2.5} />
+
+                  {/* Tooltip Start */}
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-xs font-medium text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-sm">
+                    Connect with me!
+                    {/* Segitiga panah kecil di bawah tooltip */}
+                    <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900"></span>
+                  </span>
+                  {/* Tooltip End */}
                 </a>
               </div>
               <div className="text-xs md:text-sm text-gray-500">
-                Tangerang, Banten
+                Tangerang, Indonesia
               </div>
             </div>
           </div>
@@ -281,7 +356,8 @@ export default function Home() {
                 <span className="text-gray-500 text-xs md:text-sm mt-2 md:mt-0 text-left md:text-right">
                   Feb 2026 - May 2026
                   <br className="hidden md:block" />
-                  <span className="md:hidden"> • </span>Jakarta, Indonesia
+                  <span className="md:hidden"> | </span>Jakarta, Indonesia
+                  (Remote)
                 </span>
               </div>
               <ul className="list-disc pl-4 md:pl-5 space-y-2 text-gray-700 mt-4 md:mt-0">
@@ -345,7 +421,7 @@ export default function Home() {
             <div className="mb-10 text-sm md:text-base">
               <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
                 <h4 className="font-bold text-base md:text-lg text-gray-900">
-                  Hacktiv8
+                  Coding Camp by DBS Foundation x Dicoding
                 </h4>
                 <span className="text-gray-500 text-xs md:text-sm mt-1 md:mt-0">
                   Feb 2026 - Jul 2026
