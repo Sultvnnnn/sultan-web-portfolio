@@ -573,7 +573,7 @@ export default function Home() {
               <div className="mb-10 text-sm md:text-base">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
                   <h4 className="font-bold text-base md:text-lg text-gray-900 dark:text-white">
-                    Hacktiv8
+                    Coding Camp by DBS Foundation x Dicoding Indonesia
                   </h4>
                   <span className="text-gray-500 dark:text-gray-400 text-xs md:text-sm mt-1 md:mt-0">
                     Feb 2026 - Jul 2026
